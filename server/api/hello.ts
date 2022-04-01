@@ -1,10 +1,17 @@
 import { IncomingMessage, ServerResponse } from 'http';
 
-export default async (req: IncomingMessage, res: ServerResponse) => {
-  const data = await $fetch('https://jsonplaceholder.typicode.com/todos/1');
-  console.log(data);
+// Proxy {userId: 1, id: 1, title: 'delectus aut autem', completed: false}
+export interface User {
+  userId?: string;
+  id?: number;
+  title?: string;
+  completed?: boolean;
+}
 
-  return {
-    someData: data,
-  };
+export default async (req: IncomingMessage, res: ServerResponse) => {
+  const data = await $fetch<User>(
+    'https://jsonplaceholder.typicode.com/todos/1'
+  );
+
+  return data;
 };
